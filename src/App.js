@@ -1,88 +1,111 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import personal_profile_image from './images/avatar.png';
+import './assets/bootstrap.min.css';
+import './assets/bootstrap-grid.min.css';
 import './App.css';
-// import './assets/bootstrap.min.css';
-// import './assets/bootstrap-grid.min.css';
+import Header from './Header'
+import CompletedSection from './CompletedSection';
+import List from './List';
+import _ from 'lodash';
 
 class App extends Component {
+
+constructor(props){
+  super(props);
+  this.state ={
+    list: [{
+      id:1,
+      title: 'Task1',
+      isCompleted:true,
+    },{
+      id:2,
+      title: 'Task2',
+      isCompleted:true,
+    },{
+      id:3,
+      title: 'Task3',
+      isCompleted:false,
+    },{
+      id:4,
+      title: 'Task4',
+      isCompleted:false,
+    }],
+    showCompleted: false
+  }
+}
+
+onToggleListItem = (itemId)=>{//stmt
+  let list = this.state.list;
+  const newList = _.cloneDeep(list)
+  const selectedItem = newList.find((item) => item.id === itemId)
+  console.log('item', selectedItem)
+  selectedItem.isCompleted =  !selectedItem.isCompleted
+  this.setState({list:newList});
+}
+
+onToggleCompletedList = ()=>{//stmt
+this.setState((state) => {
+  return { showCompleted: !state.showCompleted }
+})
+
+}
+onCreateNewItem = ()=>{
+  //TODO แก้ID
+  let nextID = this.state.list.length+1;
+  let list = this.state.list;
+  list =[...list, {id:nextID,title:"Task"+nextID,isCompleted:false} ]
+  this.setState({list});
+
+}
+onEditTask = (itemId, value)=>{//stmt
+  let list = this.state.list;
+  const newList = _.cloneDeep(list)
+  const selectedItem = newList.find((item) => item.id === itemId)
+  selectedItem.title = value
+  this.setState({list:newList});
+}
+
+onDeleteTask = (itemId)=>{//stmt
+let list = this.state.list;
+let newList = list.filter((item)=>item.id !== itemId)
+this.setState({list:newList});
+}
+
   render() {
+    const completedList = this.state.list.filter((item) => item.isCompleted);
+    const uncompletedList = this.state.list.filter((item) => !item.isCompleted);
+    const completed_num = completedList.length;
+
     return (
-
-
       <div className="App">
-        <div className="left-section">
 
-          <div className="profile">
-            <img src={personal_profile_image} className="personal-profile-image" alt="Personal"></img>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <Header title="To Do List" onCreateNewItem={this.onCreateNewItem}></Header>
           </div>
-
-          <div className="left-title">Name</div>
-          <div className="left-description"> Sorasak Tantipongpipat </div>
-
-          <div className="left-title">E-Mail</div>
-          <div className="left-description"> sorasak.tant@gmail.com </div>
-
-          <div className="left-title">Address</div>
-          <div className="left-description"> Sathorn, Bangkok Thailand </div>
-
         </div>
-
-        <div className="right-section">
-
-          <div className="title">Nickname</div>
-          <div className="right-description">
-
-            <ul>
-              <li>Co</li>
-            </ul>
-
-
+        <div className="row">
+          <div className="col">
+            <CompletedSection num={completed_num} showCompleted={this.onToggleCompletedList} /> 
+            {
+              this.state.showCompleted && <List list={completedList}  onEditTask={this.onEditTask}  onToggleListItem={this.onToggleListItem} onDeleteTask={this.onDeleteTask}  />
+            }
+            <List list={uncompletedList} onEditTask={this.onEditTask} onToggleListItem={this.onToggleListItem} onDeleteTask={this.onDeleteTask}   />
           </div>
-
-          <div className="title">Education</div>
-          <div className="right-description">
-            <b>Bachelor's Degree</b>
-
-            <ul>
-              <li>Bachelor of Science (Information Technology), School of Information Technology.
-                                             King Mongkut’s University of Technology Thonburi</li>
-            </ul>
-
-
-          </div>
-
-          <div className="title">Work Experience</div>
-          <div className="right-description">
-            <b>Software Developer, CareerVisa Digital</b><br></br>
-            <ul>
-              <li>Responsible on CareerVisa Website and Application</li>
-            </ul>
-
-          </div>
-
-          <div className="title">Extra Activity</div>
-          <div className="right-description">
-            <b>Workshop Leader</b><br></br>
-
-            <ul>
-              <li>“Graph Paper Programming” for Secondary students, Microsoft YouthSpark</li>
-              <li>“Scratch Programming” for Primary students, Code Their Dreams Project, CDG House</li>
-            </ul>
-
-
-
-
-          </div>
-
-
-
-
         </div>
+      </div>
+
 
       </div>
     );
   }
 }
+
+class RadioBtn extends React.Component {
+  constructor(props) {
+    //Constructor
+  };
+}
+
 
 export default App;

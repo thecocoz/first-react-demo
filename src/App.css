@@ -42,69 +42,20 @@
   font-family: Quark;
   src: url(./assets/Quark-Bold.otf);
 }
-@font-face {
-  font-family: FontAwesome;
-  src: url(./assets/FontAwesome.otf);
+
+.header{
+  position: flex;
+  flex-direction:row;
 }
 
-.personal-profile-image{
-  width:200px;
-  height:200px;
+.list{
+  position: flex;
+  flex-direction:row;
 }
 
-@media(max-width: 768px){
-  .App{
-  display:flex;
-  flex-direction: column;
-  margin-left:0px;
-  margin-right:0px;
-  margin-top:0px;
-  }
-}
-
-.left-section{
-  width: 40%;
-}
-
-.right-section{
-  width: 60%;
-  background-color: #d2e9ff;
-}
-
-.left-title{
-  font-size: 1em;
-  font-family: 'Quark';
-  padding: 2px;
-}
-
-.left-desciption{
-  font-size: 0.75em;
-  padding-bottom: 3px;
-  border-style: solid;
-  border-color: #61dafb;
-  border-width:1.5px;
-}
-
-.title{
-  font-size: 1em;
-  font-family: 'Quark';
-  padding: 2px;
-  background-color: rgba(0, 0, 255, 0.2);
-}
-
-.right-description{
+.Listitem{
+  padding-top: 5px;
   padding-bottom: 5px;
-}
-
-.title:before{
-  font-family: 'FontAwesome';
-  padding-right: 0.5em;
-  content: ">>";
-}
-
-.profile{
-  margin: auto 0;
-  float: auto;
-  display:flex;
+  background-color: #ECF7FF;
 }
 
